@@ -31,8 +31,8 @@ type OgImageParams = {
 
 // Default site configuration
 const siteConfig: SiteConfig = {
-  title: "Roboto Studio Demo",
-  description: "Roboto Studio Demo",
+  title: "JAMB Antiques",
+  description: "JAMB Antiques",
   twitterHandle: "@studioroboto",
   keywords: ["roboto", "studio", "demo", "sanity", "next", "react", "template"],
 };
