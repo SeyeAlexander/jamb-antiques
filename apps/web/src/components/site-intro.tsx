@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const INTRO_KEY = "jamb-intro-seen";
-const INTRO_DURATION_MS = 1600;
+const INTRO_DURATION_MS = 2600;
 
 export function SiteIntro() {
   const [showIntro, setShowIntro] = useState(false);
@@ -14,19 +13,17 @@ export function SiteIntro() {
       return;
     }
 
-    const hasSeenIntro = window.sessionStorage.getItem(INTRO_KEY) === "true";
-
-    if (hasSeenIntro) {
-      return;
-    }
-
     setShowIntro(true);
-    window.sessionStorage.setItem(INTRO_KEY, "true");
+    document.body.classList.add("jamb-intro-active");
 
     const leaveTimer = window.setTimeout(() => setIsLeaving(true), INTRO_DURATION_MS);
-    const hideTimer = window.setTimeout(() => setShowIntro(false), INTRO_DURATION_MS + 500);
+    const hideTimer = window.setTimeout(() => {
+      setShowIntro(false);
+      document.body.classList.remove("jamb-intro-active");
+    }, INTRO_DURATION_MS + 650);
 
     return () => {
+      document.body.classList.remove("jamb-intro-active");
       window.clearTimeout(leaveTimer);
       window.clearTimeout(hideTimer);
     };
@@ -41,20 +38,17 @@ export function SiteIntro() {
       aria-hidden='true'
       className={`jamb-intro-screen ${isLeaving ? "is-leaving" : ""}`}
     >
-      <div className='jamb-intro-frame'>
-        <div className='jamb-intro-panel'>
-          <p className='jamb-intro-name'>Jamb</p>
+      <main className='flex min-h-screen items-center justify-center px-6 text-center'>
+        <div className='flex w-full max-w-md flex-col items-center gap-6'>
+          <p className='jamb-loading-wordmark text-7xl leading-none text-black'>Jamb.</p>
+          <div className='h-px w-full overflow-hidden bg-jamb-line'>
+            <div className='jamb-loading-line h-full w-full bg-black' />
+          </div>
+          <p className='text-xs font-medium tracking-[0.28em] uppercase text-jamb-ink-muted'>
+            Curating the collection
+          </p>
         </div>
-
-        <div className='jamb-intro-mark'>
-          <p className='jamb-intro-wordmark'>Jamb</p>
-          <p className='jamb-intro-caption'>Antiques and architectural salvage</p>
-        </div>
-
-        <div className='jamb-intro-panel'>
-          <p className='jamb-intro-name'>Curated interiors</p>
-        </div>
-      </div>
+      </main>
     </div>
   );
 }

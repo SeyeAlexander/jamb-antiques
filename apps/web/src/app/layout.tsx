@@ -38,17 +38,19 @@ export default async function RootLayout({
     <html lang='en' suppressHydrationWarning>
       <body className={`${fontBrand.variable} ${fontMono.variable} antialiased`}>
         <Providers>
-          <Navbar />
-          {children}
-          <JambFooter />
-          <SanityLive />
-          <CombinedJsonLd includeOrganization includeWebsite />
-          {(await draftMode()).isEnabled && (
-            <>
-              <PreviewBar />
-              <VisualEditing />
-            </>
-          )}
+          <div className='jamb-site-shell'>
+            <Navbar />
+            {children}
+            <JambFooter />
+            <SanityLive />
+            <CombinedJsonLd includeOrganization includeWebsite />
+            {(await draftMode()).isEnabled && (
+              <>
+                <PreviewBar />
+                <VisualEditing />
+              </>
+            )}
+          </div>
         </Providers>
       </body>
     </html>
