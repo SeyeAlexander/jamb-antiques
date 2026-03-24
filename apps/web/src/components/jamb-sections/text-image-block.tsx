@@ -3,6 +3,8 @@ import { urlFor } from "@workspace/sanity/client";
 import Image from "next/image";
 import { PortableText } from "next-sanity";
 
+import { ScrollReveal } from "@/components/scroll-reveal";
+
 type LocalTextImageBlockProps = {
   sectionTitle?: string;
   smallImgSize?: boolean;
@@ -71,7 +73,10 @@ export function TextImageBlock(props: TextImageBlockProps) {
         <div
           className={`flex flex-col items-center gap-8 md:gap-0 ${direction === "left" ? "md:flex-row-reverse" : "md:flex-row"}`}
         >
-          <div className='flex w-full flex-col items-center px-4 text-base md:w-1/2 md:px-12'>
+          <ScrollReveal
+            className='flex w-full flex-col items-center px-4 text-base md:w-1/2 md:px-12'
+            direction={direction === "left" ? "right" : "left"}
+          >
             {props.sectionTitle ? (
               <p className='jamb-kicker mb-4 capitalize'>{props.sectionTitle}</p>
             ) : null}
@@ -106,9 +111,13 @@ export function TextImageBlock(props: TextImageBlockProps) {
                 ))}
               </div>
             ) : null}
-          </div>
+          </ScrollReveal>
 
-          <div className='flex w-full justify-center md:w-1/2'>
+          <ScrollReveal
+            className='flex w-full justify-center md:w-1/2'
+            delay={120}
+            direction={direction === "left" ? "left" : "right"}
+          >
             <div
               className={`relative w-full overflow-hidden bg-jamb-light ${smallImgSize ? "max-h-140 max-w-100" : "max-h-182 max-w-145"}`}
               style={{ aspectRatio: "4 / 5" }}
@@ -116,7 +125,7 @@ export function TextImageBlock(props: TextImageBlockProps) {
               {imageSrc ? (
                 <Image
                   alt={imageAlt}
-                  className='object-cover'
+                  className='object-cover transition-transform duration-700 ease-out hover:scale-[1.015]'
                   fill
                   sizes='(min-width: 1024px) 42vw, 100vw'
                   src={imageSrc}
@@ -127,7 +136,7 @@ export function TextImageBlock(props: TextImageBlockProps) {
                 </div>
               )}
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

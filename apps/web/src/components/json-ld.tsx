@@ -1,9 +1,6 @@
 import { client, urlFor } from "@workspace/sanity/client";
 import { querySettingsData } from "@workspace/sanity/query";
-import type {
-  QueryBlogSlugPageDataResult,
-  QuerySettingsDataResult,
-} from "@workspace/sanity/types";
+import type { QuerySettingsDataResult } from "@workspace/sanity/types";
 import { stegaClean } from "next-sanity";
 import type {
   Answer,
@@ -124,73 +121,6 @@ function buildSafeImageUrl(image?: { id?: string | null }) {
     .url();
 }
 
-// Article JSON-LD Component
-type ArticleJsonLdProps = {
-  article: QueryBlogSlugPageDataResult;
-  settings?: QuerySettingsDataResult;
-};
-export function ArticleJsonLd({
-  article: rawArticle,
-  settings,
-}: ArticleJsonLdProps) {
-  if (!rawArticle) {
-    return null;
-  }
-  const article = stegaClean(rawArticle);
-
-  const baseUrl = getBaseUrl();
-  const articleUrl = `${baseUrl}${article.slug}`;
-  const imageUrl = buildSafeImageUrl(article.image);
-
-  const articleJsonLd: WithContext<Article> = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: article.title,
-    description: article.description || undefined,
-    image: imageUrl ? [imageUrl] : undefined,
-    author: article.authors
-      ? [
-          {
-            "@type": "Person",
-            name: article.authors.name,
-            url: `${baseUrl}`,
-            image: article.authors.image
-              ? ({
-                  "@type": "ImageObject",
-                  url: buildSafeImageUrl(article.authors.image),
-                } as ImageObject)
-              : undefined,
-          } as Person,
-        ]
-      : [],
-    publisher: {
-      "@type": "Organization",
-      name: settings?.siteTitle || "Website",
-      logo: settings?.logo
-        ? ({
-            "@type": "ImageObject",
-            url: settings.logo,
-          } as ImageObject)
-        : undefined,
-    } as Organization,
-    datePublished: new Date(
-      article.publishedAt || article._createdAt || new Date().toISOString()
-    ).toISOString(),
-    dateModified: new Date(
-      article._updatedAt || new Date().toISOString()
-    ).toISOString(),
-    url: articleUrl,
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": articleUrl,
-    } as WebPage,
-  };
-
-  return (
-    <JsonLdScript data={articleJsonLd} id={`article-json-ld-${article.slug}`} />
-  );
-}
-
 // Organization JSON-LD Component
 type OrganizationJsonLdProps = {
   settings: QuerySettingsDataResult;
@@ -262,7 +192,6 @@ export function WebSiteJsonLd({ settings }: WebSiteJsonLdProps) {
 // Combined JSON-LD Component for pages with multiple structured data
 type CombinedJsonLdProps = {
   settings?: QuerySettingsDataResult;
-  article?: QueryBlogSlugPageDataResult;
   faqs?: FlexibleFaq[];
   includeWebsite?: boolean;
   includeOrganization?: boolean;

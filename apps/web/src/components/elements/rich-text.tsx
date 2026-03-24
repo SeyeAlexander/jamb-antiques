@@ -130,7 +130,7 @@ export function RichText<T extends SanityRichTextProps>({
         onMissingComponent={(_, { nodeType, type }) => {
           logger.warn(`Missing component: ${nodeType} for type: ${type}`);
         }}
-        value={richText}
+        value={richText as any}
       />
     </div>
   );

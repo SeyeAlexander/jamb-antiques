@@ -2,6 +2,8 @@ import type { SanityImageSource } from "@sanity/asset-utils";
 import { urlFor } from "@workspace/sanity/client";
 import Image from "next/image";
 
+import { ScrollReveal } from "@/components/scroll-reveal";
+
 type LocalHeroBlockProps = {
   imageSrc: string;
   links: string[];
@@ -53,33 +55,37 @@ export function HeroBlock(props: HeroBlockProps) {
   return (
     <section className='w-full pb-10'>
       <div className='jamb-shell'>
-        <div className='mb-4 w-full overflow-hidden bg-jamb-light'>
-          {imageSrc ? (
-            <Image
-              alt={imageAlt}
-              className='h-auto w-full object-cover'
-              height={1040}
-              priority
-              sizes='100vw'
-              src={imageSrc}
-              width={1800}
-            />
-          ) : null}
-        </div>
+        <ScrollReveal>
+          <div className='mb-4 w-full overflow-hidden bg-jamb-light'>
+            {imageSrc ? (
+              <Image
+                alt={imageAlt}
+                className='h-auto w-full object-cover'
+                height={1040}
+                priority
+                sizes='100vw'
+                src={imageSrc}
+                width={1800}
+              />
+            ) : null}
+          </div>
+        </ScrollReveal>
 
-        <div className='flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-jamb-gray'>
-          {links.map((link, index) => (
-            <span key={link.key} className='flex items-center gap-3'>
-              <a
-                className='text-base font-[550] transition-colors capitalize hover:text-black'
-                href={link.href}
-              >
-                {link.label}
-              </a>
-              {index < links.length - 1 ? <span className='font-light'>|</span> : null}
-            </span>
-          ))}
-        </div>
+        <ScrollReveal delay={140}>
+          <div className='flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-jamb-gray'>
+            {links.map((link, index) => (
+              <span key={link.key} className='flex items-center gap-3'>
+                <a
+                  className='text-base font-[550] transition-colors capitalize hover:text-black'
+                  href={link.href}
+                >
+                  {link.label}
+                </a>
+                {index < links.length - 1 ? <span className='font-light'>|</span> : null}
+              </span>
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

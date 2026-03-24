@@ -5,12 +5,7 @@ import type { ImageResponseOptions } from "next/server";
 import type { Maybe } from "@/types";
 import { getTitleCase } from "@/utils";
 import { getOgMetaData } from "./og-config";
-import {
-  getBlogPageOGData,
-  getGenericPageOGData,
-  getHomePageOGData,
-  getSlugPageOGData,
-} from "./og-data";
+import { getGenericPageOGData, getHomePageOGData, getSlugPageOGData } from "./og-data";
 
 export const runtime = "edge";
 
@@ -239,20 +234,6 @@ const getSlugPageContent = async ({ id }: ContentProps) => {
   return dominantColorSeoImageRender(result);
 };
 
-const getBlogPageContent = async ({ id }: ContentProps) => {
-  if (!id) {
-    return;
-  }
-  const [result, err] = await getBlogPageOGData(id);
-  if (err || !result) {
-    return;
-  }
-  if (result?.seoImage) {
-    return seoImageRender({ seoImage: result.seoImage });
-  }
-  return dominantColorSeoImageRender(result);
-};
-
 const getGenericPageContent = async ({ id }: ContentProps) => {
   if (!id) {
     return;
@@ -270,7 +251,6 @@ const getGenericPageContent = async ({ id }: ContentProps) => {
 const block = {
   homePage: getHomePageContent,
   page: getSlugPageContent,
-  blog: getBlogPageContent,
 } as const;
 
 export async function GET({ url }: Request): Promise<ImageResponse> {

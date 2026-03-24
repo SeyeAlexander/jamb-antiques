@@ -2,6 +2,8 @@ import type { SanityImageSource } from "@sanity/asset-utils";
 import { urlFor } from "@workspace/sanity/client";
 import Image from "next/image";
 
+import { ScrollReveal } from "@/components/scroll-reveal";
+
 type SizeAspect = "standard" | "wide" | "tall" | "large";
 
 type LocalCollectionItem = {
@@ -94,7 +96,9 @@ export function CollectionGridBlock(props: CollectionGridBlockProps) {
     <section className='w-full bg-jamb-grid py-10'>
       <div className='jamb-shell'>
         <div className='w-full'>
-          <h2 className='mb-8 text-center text-[21px] font-medium text-black'>{heading}</h2>
+          <ScrollReveal>
+            <h2 className='mb-8 text-center text-[21px] font-medium text-black'>{heading}</h2>
+          </ScrollReveal>
 
           <div className='flex flex-wrap justify-center gap-x-(--jamb-grid-gap) gap-y-12'>
             {items.map((item, index) => {
@@ -102,28 +106,31 @@ export function CollectionGridBlock(props: CollectionGridBlockProps) {
               const imageAlt = item.image?.alt ?? item.title ?? `${heading} item ${index + 1}`;
 
               return (
-                <article
+                <ScrollReveal
                   key={index}
                   className='flex w-full max-w-md flex-col items-center text-base sm:w-[calc(50%-0.75rem)] lg:w-[calc((100%-3rem)/3)] xl:w-[calc((100%-6rem)/5)]'
+                  delay={Math.min(index * 60, 240)}
                 >
-                  <div
-                    className='relative mb-4 w-full overflow-hidden bg-jamb-dark'
-                    style={{ aspectRatio: getAspectRatio(item) }}
-                  >
-                    {src ? (
-                      <Image
-                        alt={imageAlt}
-                        className='object-contain'
-                        fill
-                        sizes='(min-width: 1280px) 18vw, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw'
-                        src={src}
-                      />
-                    ) : null}
-                  </div>
+                  <article className='flex w-full flex-col items-center text-base'>
+                    <div
+                      className='relative mb-4 w-full overflow-hidden bg-jamb-dark'
+                      style={{ aspectRatio: getAspectRatio(item) }}
+                    >
+                      {src ? (
+                        <Image
+                          alt={imageAlt}
+                          className='object-contain transition-transform duration-700 ease-out hover:scale-[1.02]'
+                          fill
+                          sizes='(min-width: 1280px) 18vw, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw'
+                          src={src}
+                        />
+                      ) : null}
+                    </div>
 
-                  <h3 className='font-bold text-jamb-ink-muted'>{item.title}</h3>
-                  <p className='font-medium text-jamb-ink-soft'>{item.subtitle}</p>
-                </article>
+                    <h3 className='font-bold text-jamb-ink-muted'>{item.title}</h3>
+                    <p className='font-medium text-jamb-ink-soft'>{item.subtitle}</p>
+                  </article>
+                </ScrollReveal>
               );
             })}
           </div>
