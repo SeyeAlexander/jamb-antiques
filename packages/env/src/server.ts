@@ -12,6 +12,7 @@ const env = createEnv({
   server: {
     SANITY_API_READ_TOKEN: z.string().min(1),
     SANITY_API_WRITE_TOKEN: z.string().min(1),
+    SANITY_REVALIDATE_SECRET: z.string().optional(),
   },
 
   experimental__runtimeEnv: {
