@@ -33,6 +33,8 @@ export const heroBlock = defineType({
               title: "Link URL",
               type: "string",
               initialValue: "#",
+              description:
+                "Use homepage anchors like #fireplaces, #lighting, #furniture, or #journal to scroll to sections on the page.",
             }),
           ],
           preview: {

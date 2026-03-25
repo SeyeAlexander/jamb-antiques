@@ -224,6 +224,13 @@
             "value": "collectionGridBlock"
           }
         },
+        "sectionId": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
         "heading": {
           "type": "objectAttribute",
           "value": {
@@ -400,6 +407,13 @@
             "type": "string",
             "value": "textImageBlock"
           }
+        },
+        "sectionId": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
         },
         "sectionTitle": {
           "type": "objectAttribute",

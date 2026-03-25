@@ -8,6 +8,13 @@ export const collectionGridBlock = defineType({
   icon: LayoutGrid as any,
   fields: [
     defineField({
+      name: "sectionId",
+      title: "Section Anchor ID",
+      type: "string",
+      description:
+        "Optional anchor for in-page navigation, for example fireplaces-grid, lighting-grid, furniture-grid, or journal.",
+    }),
+    defineField({
       name: "heading",
       title: "Section Heading",
       type: "string",

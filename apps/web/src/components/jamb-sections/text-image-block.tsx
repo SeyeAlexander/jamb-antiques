@@ -6,6 +6,7 @@ import { PortableText } from "next-sanity";
 import { ScrollReveal } from "@/components/scroll-reveal";
 
 type LocalTextImageBlockProps = {
+  sectionId?: string;
   sectionTitle?: string;
   smallImgSize?: boolean;
   heading: string;
@@ -18,6 +19,7 @@ type LocalTextImageBlockProps = {
 
 type SanityTextImageBlockProps = {
   _type?: "textImageBlock";
+  sectionId?: string | null;
   heading?: string | null;
   sectionTitle?: string | null;
   secondaryBg?: string | null;
@@ -52,6 +54,7 @@ export function TextImageBlock(props: TextImageBlockProps) {
     : (props.buttons ?? []);
   const secondaryBg = isSanity ? props.secondaryBg : props.secondaryBg;
   const sectionTitle = isSanity ? props.sectionTitle : props.sectionTitle;
+  const sectionId = isSanity ? props.sectionId : props.sectionId;
   const imageSrc =
     isSanity && props.image?.asset?._ref
       ? urlFor(props.image as unknown as SanityImageSource)
@@ -66,6 +69,7 @@ export function TextImageBlock(props: TextImageBlockProps) {
 
   return (
     <section
+      id={sectionId ?? undefined}
       className='w-full py-20'
       style={secondaryBg ? { backgroundColor: secondaryBg } : undefined}
     >
@@ -103,7 +107,7 @@ export function TextImageBlock(props: TextImageBlockProps) {
                 {buttons.map((button, index) => (
                   <a
                     key={index}
-                    className='jamb-outline-button w-fit tracking-wider hover:border-black hover:text-black'
+                    className='jamb-outline-button w-fit tracking-wider md:hover:border-black md:hover:text-black'
                     href={button.href}
                   >
                     {button.label}
@@ -125,7 +129,7 @@ export function TextImageBlock(props: TextImageBlockProps) {
               {imageSrc ? (
                 <Image
                   alt={imageAlt}
-                  className='object-cover transition-transform duration-700 ease-out hover:scale-[1.015]'
+                  className='object-cover transition-transform duration-700 ease-out md:hover:scale-[1.015]'
                   fill
                   sizes='(min-width: 1024px) 42vw, 100vw'
                   src={imageSrc}

@@ -55,6 +55,7 @@ export type SeoImage = {
 
 export type CollectionGridBlock = {
   _type: "collectionGridBlock";
+  sectionId?: string;
   heading?: string;
   items?: Array<{
     image?: CollectionItemImage;
@@ -80,6 +81,7 @@ export type BrandStripBlock = {
 
 export type TextImageBlock = {
   _type: "textImageBlock";
+  sectionId?: string;
   sectionTitle?: string;
   smallImgSize?: boolean;
   heading?: string;
@@ -1020,6 +1022,7 @@ export type QueryHomePageDataResult = {
     | {
         _key: string;
         _type: "collectionGridBlock";
+        sectionId?: string;
         heading?: string;
         items: Array<{
           image: {
@@ -1483,6 +1486,7 @@ export type QueryHomePageDataResult = {
     | {
         _key: string;
         _type: "textImageBlock";
+        sectionId?: string;
         sectionTitle?: string;
         smallImgSize?: boolean;
         heading?: string;
@@ -1598,6 +1602,7 @@ export type QuerySlugPageDataResult = {
     | {
         _key: string;
         _type: "collectionGridBlock";
+        sectionId?: string;
         heading?: string;
         items: Array<{
           image: {
@@ -2061,6 +2066,7 @@ export type QuerySlugPageDataResult = {
     | {
         _key: string;
         _type: "textImageBlock";
+        sectionId?: string;
         sectionTitle?: string;
         smallImgSize?: boolean;
         heading?: string;

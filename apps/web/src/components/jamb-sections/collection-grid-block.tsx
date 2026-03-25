@@ -33,11 +33,13 @@ type CollectionGridItem = {
 
 type CollectionGridBlockProps =
   | {
+      sectionId?: string;
       heading: string;
       items: LocalCollectionItem[];
     }
   | {
       _type?: "collectionGridBlock";
+      sectionId?: string | null;
       heading?: string | null;
       items?: CollectionGridItem[] | null;
     };
@@ -76,24 +78,26 @@ function buildImageSource(item: CollectionGridItem) {
 }
 
 function normalizeItems(props: CollectionGridBlockProps): {
+  sectionId?: string | null;
   heading: string;
   items: CollectionGridItem[];
 } {
   return {
+    sectionId: props.sectionId,
     heading: props.heading ?? "",
     items: props.items ?? [],
   };
 }
 
 export function CollectionGridBlock(props: CollectionGridBlockProps) {
-  const { heading, items } = normalizeItems(props);
+  const { sectionId, heading, items } = normalizeItems(props);
 
   if (!items.length) {
     return null;
   }
 
   return (
-    <section className='w-full bg-jamb-grid py-10'>
+    <section id={sectionId ?? undefined} className='w-full bg-jamb-grid py-10'>
       <div className='jamb-shell'>
         <div className='w-full'>
           <ScrollReveal>
@@ -119,7 +123,7 @@ export function CollectionGridBlock(props: CollectionGridBlockProps) {
                       {src ? (
                         <Image
                           alt={imageAlt}
-                          className='object-contain transition-transform duration-700 ease-out hover:scale-[1.02]'
+                          className='object-contain transition-transform duration-700 ease-out md:hover:scale-[1.02]'
                           fill
                           sizes='(min-width: 1280px) 18vw, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw'
                           src={src}
